@@ -1,0 +1,80 @@
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnp.*
+
+# TypeScript / build outputs
+dist/
+build/
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Client
+client/node_modules/
+client/dist/
+client/.env
+client/.env.local
+client/.env.*.local
+
+# Server
+server/node_modules/
+server/dist/
+server/.env
+server/.env.local
+server/.env.*.local
+
+# Uploaded files (adjust if you store uploads elsewhere)
+uploads/
+server/uploads/
+client/uploads/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+.Spotlight-V100
+
+# Caches
+.cache/
+.parcel-cache/
+.vite/
+.turbo/
+.next/
+.sass-cache/
+
+# Optional npm/yarn/pnpm folders
+.npm/
+.eslintcache
+
+# Misc
+*.local
+*.log
