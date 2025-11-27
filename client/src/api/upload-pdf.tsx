@@ -1,6 +1,6 @@
 import api from "../cors/axiousInstance";
 
-export  const sendToBackend = async (file: File) => {
+export const sendToBackend = async (file: File) => {
   try {
     const formData = new FormData();
     formData.append("pdf", file);
@@ -10,9 +10,12 @@ export  const sendToBackend = async (file: File) => {
         "Content-Type": "multipart/form-data",
       },
     });
-
+    
+    console.log('Response from backend:', response);
     return response.data;
+    
   } catch (err) {
     console.error("Upload error:", err);
+    throw err; // Re-throw the error so caller can handle it
   }
 };

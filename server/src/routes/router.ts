@@ -1,13 +1,11 @@
 import express from "express";
+import { uploadPDF } from "../congif/multerConfig.ts";
 import { controller } from "../controller/controller.ts";
 
-const Controller=new controller()
-
+const Controller = new controller();
 const router = express.Router();
 
-
-
-router.post('/upload-pdf', Controller.uploadPdf);
-
+// Route with multer middleware
+router.post('/upload-pdf', uploadPDF.single('pdf'), Controller.uploadPdf);
 
 export default router;

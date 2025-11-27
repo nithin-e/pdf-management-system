@@ -40,30 +40,41 @@ const HomePage: React.FC = () => {
     setIsDragging(false);
   };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      const file = files[0];
-      if (validatePDF(file)) {
-        console.log("Valid PDF file:", file);
-        sendToBackend(file);
+ const handleDrop = async (e: React.DragEvent) => {
+  e.preventDefault();
+  setIsDragging(false);
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    const file = files[0];
+    if (validatePDF(file)) {
+      console.log("Valid PDF file:", file);
+      try {
+        const res = await sendToBackend(file);
+        console.log('check this response', res); // This will now work
+      } catch (error) {
+        console.error('Failed to upload:', error);
+        setError('Failed to upload PDF. Please try again.');
       }
     }
-  };
+  }
+};
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      if (validatePDF(file)) {
-        console.log("Valid PDF file:", file);
-        sendToBackend(file);
+const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const files = e.target.files;
+  if (files && files.length > 0) {
+    const file = files[0];
+    if (validatePDF(file)) {
+      console.log("Valid PDF file:", file);
+      try {
+        const res = await sendToBackend(file);
+        console.log('check this response', res); 
+      } catch (error) {
+        console.error('Failed to upload:', error);
+        setError('Failed to upload PDF. Please try again.');
       }
     }
-  };
-
+  }
+};
 
 
   return (
