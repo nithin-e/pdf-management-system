@@ -7,5 +7,7 @@ const router = express.Router();
 
 // Route with multer middleware
 router.post('/upload-pdf', uploadPDF.single('pdf'), Controller.uploadPdf);
+router.post('/extract-pages', Controller.extractPages);
+
 
 export default router;

@@ -3,26 +3,30 @@ import { Upload, AlertCircle } from "lucide-react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { sendToBackend } from "../api/upload-pdf";
+import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string>("");
+  const [uploading, setUploading] = useState(false);
+
+  const navigate = useNavigate();
 
   const validatePDF = (file: File): boolean => {
     const fileName = file.name.toLowerCase();
-    if (!fileName.endsWith('.pdf')) {
+    if (!fileName.endsWith(".pdf")) {
       setError("Please upload a PDF file only");
       return false;
     }
 
-    if (file.type !== 'application/pdf') {
+    if (file.type !== "application/pdf") {
       setError("Invalid file type. Please upload a PDF file");
       return false;
     }
 
-    const maxSize = 30 * 1024 * 1024; 
+    const maxSize = 30 * 1024 * 1024;
     if (file.size > maxSize) {
-      setError("File size too large. Maximum size is 10MB");
+      setError("File size too large. Maximum size is 30MB");
       return false;
     }
 
@@ -40,42 +44,57 @@ const HomePage: React.FC = () => {
     setIsDragging(false);
   };
 
- const handleDrop = async (e: React.DragEvent) => {
-  e.preventDefault();
-  setIsDragging(false);
-  const files = e.dataTransfer.files;
-  if (files.length > 0) {
-    const file = files[0];
-    if (validatePDF(file)) {
-      console.log("Valid PDF file:", file);
-      try {
-        const res = await sendToBackend(file);
-        console.log('check this response', res); // This will now work
-      } catch (error) {
-        console.error('Failed to upload:', error);
-        setError('Failed to upload PDF. Please try again.');
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      const file = files[0];
+      if (validatePDF(file)) {
+        console.log("Valid PDF file:", file);
+        setUploading(true);
+        try {
+          const res = await sendToBackend(file);
+
+          console.log("check this response", res);
+
+          navigate("/afterUpload", {
+            state: { fileData: res.file },
+          });
+        } catch (error) {
+          console.error("Failed to upload:", error);
+          setError("Failed to upload PDF. Please try again.");
+        } finally {
+          setUploading(false);
+        }
       }
     }
-  }
-};
+  };
 
-const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const files = e.target.files;
-  if (files && files.length > 0) {
-    const file = files[0];
-    if (validatePDF(file)) {
-      console.log("Valid PDF file:", file);
-      try {
-        const res = await sendToBackend(file);
-        console.log('check this response', res); 
-      } catch (error) {
-        console.error('Failed to upload:', error);
-        setError('Failed to upload PDF. Please try again.');
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (validatePDF(file)) {
+        console.log("Valid PDF file:", file);
+        setUploading(true);
+        try {
+          const res = await sendToBackend(file);
+
+          console.log("check this response", res);
+
+          navigate("/afterUpload", {
+            state: { fileData: res.file },
+          });
+        } catch (error) {
+          console.error("Failed to upload:", error);
+          setError("Failed to upload PDF. Please try again.");
+        } finally {
+          setUploading(false);
+        }
       }
     }
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -101,13 +120,25 @@ const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
               onChange={handleFileSelect}
               className="hidden"
               id="pdf-upload"
+              disabled={uploading}
             />
             <label
               htmlFor="pdf-upload"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-10 py-4 rounded-full text-lg font-semibold cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
+              className={`inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-10 py-4 rounded-full text-lg font-semibold cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200 ${
+                uploading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              <Upload className="w-5 h-5" />
-              <span>Upload PDF →</span>
+              {uploading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Uploading...</span>
+                </>
+              ) : (
+                <>
+                  <Upload className="w-5 h-5" />
+                  <span>Upload PDF →</span>
+                </>
+              )}
             </label>
           </div>
 

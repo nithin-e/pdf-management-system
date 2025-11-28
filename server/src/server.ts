@@ -7,14 +7,14 @@ import path from "path";
 import router from "./routes/router.ts";
 import cors from "cors";
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const uploadDir = path.join(process.cwd(), 'src/uploads');
+const uploadDir = path.join(process.cwd(), 'uploads'); 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
+
 
 app.use(cors({
   origin: "http://localhost:5173", 
@@ -30,6 +30,9 @@ app.use((req, res, next) => {
   console.log("Request received:", req.method, req.url);
   next();
 });
+
+app.use('/uploads', express.static(uploadDir));
+
 
 app.use('/api', router);
 
