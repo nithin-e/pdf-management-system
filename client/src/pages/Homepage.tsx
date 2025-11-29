@@ -84,7 +84,7 @@ const HomePage: React.FC = () => {
           console.log("check this response", res);
 
           navigate("/afterUpload", {
-            state: { fileData: res.file },
+            state: { fileData: res.data.file },
           });
         } catch (error) {
           console.error("Failed to upload:", error);

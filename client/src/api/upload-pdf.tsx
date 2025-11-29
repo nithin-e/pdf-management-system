@@ -16,6 +16,6 @@ export const sendToBackend = async (file: File) => {
     
   } catch (err) {
     console.error("Upload error:", err);
-    throw err; // Re-throw the error so caller can handle it
+    throw err; 
   }
 };

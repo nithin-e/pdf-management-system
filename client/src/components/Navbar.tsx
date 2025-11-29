@@ -12,15 +12,13 @@ const Navbar: React.FC = () => {
               <span className="text-xl font-bold text-gray-900">PDFly</span>
             </div>
             <div className="hidden md:flex space-x-6">
-              <a href="#" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
+              <a href="/" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
                 Blog
               </a>
-              <a href="#" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
+              <a href="/" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
                 Help
               </a>
-              <a href="#" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
-                Pricing
-              </a>
+          
             </div>
           </div>
           {/* <button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">

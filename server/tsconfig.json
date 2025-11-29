@@ -17,8 +17,7 @@
     "declaration": true,
     "declarationMap": true,
     "isolatedModules": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": false
   },
   "include": ["src"],
   "exclude": ["node_modules"],
@@ -27,3 +26,5 @@
     "experimentalEsm": true
   }
 }
+
+// allowImportingTsExtensions
