@@ -44,7 +44,9 @@ const PDFTaskUI: React.FC = () => {
   const loadPDF = async (file: FileData) => {
     try {
       // const pdfUrl = `http://localhost:5000/${file.path}`;
-      const pdfUrl = `http://localhost:5000/uploads/${file.filename}`;
+      // const pdfUrl = `http://localhost:5000/uploads/${file.filename}`;
+      const pdfUrl = `${import.meta.env.VITE_API_BASE_URL}/uploads/${file.filename}`;
+
       const loadingTask = pdfjsLib.getDocument(pdfUrl);
       const pdf = await loadingTask.promise;
 
