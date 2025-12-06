@@ -9,8 +9,10 @@ export const extractPdfPages = async (filename: string, pages: number[]) => {
       pages,
     },
     {
-      responseType: 'blob',
+      responseType: "blob",
     }
   );
   return response.data;
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
