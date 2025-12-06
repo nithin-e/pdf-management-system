@@ -4,6 +4,8 @@ import { IPDFService } from "../services/interfaces/IPDFService.js";
 import { UploadedFileInfo } from "../types/index.js";
 import { ApiResponseHandler } from "../utils/responses/apiResponse.js";
 import { PDFValidator } from "../utils/validators/pdfValidator.js";
+import { MESSAGES } from "../utils/constants/messages.js";
+import { HTTP_STATUS_CODES } from "../utils/constants/statusCodes.js";
 
 
 export class PDFController {
@@ -22,7 +24,6 @@ export class PDFController {
   ): Promise<void> => {
     try {
 
-        console.log('hitting meeeeeee');
         
       PDFValidator.validateUploadRequest(req.file);
 
@@ -36,9 +37,9 @@ export class PDFController {
 
       ApiResponseHandler.success(
         res,
-        "PDF uploaded successfully",
+        MESSAGES.PDF_UPLOADED_SUCCESSFULLY,
         { file: fileInfo },
-        200
+        HTTP_STATUS_CODES.OK
       );
     } catch (error) {
       next(error);
@@ -56,7 +57,7 @@ export class PDFController {
       );
 
       if (!this.fileService.fileExists(filename)) {
-        ApiResponseHandler.error(res, "PDF file not found", undefined, 404);
+        ApiResponseHandler.error(res, MESSAGES.PDF_FILE_NOT_FOUND, undefined, HTTP_STATUS_CODES.NOT_FOUND);
         return;
       }
 
