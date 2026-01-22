@@ -11,12 +11,10 @@ export const sendToBackend = async (file: File) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    
-    console.log('Response from backend:', response);
+
     return response.data;
-    
   } catch (err) {
     console.error("Upload error:", err);
-    throw err; 
+    throw err;
   }
 };

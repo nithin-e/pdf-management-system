@@ -30,9 +30,6 @@ const PDFTaskUI: React.FC = () => {
   useEffect(() => {
     const uploadedFile = location.state?.fileData;
 
-   console.log(' check this data first ',uploadedFile);
-    
-
     if (uploadedFile) {
       setFileData(uploadedFile);
       loadPDF(uploadedFile);
@@ -43,9 +40,9 @@ const PDFTaskUI: React.FC = () => {
 
   const loadPDF = async (file: FileData) => {
     try {
-      // const pdfUrl = `http://localhost:5000/${file.path}`;
-      // const pdfUrl = `http://localhost:5000/uploads/${file.filename}`;
-      const pdfUrl = `${import.meta.env.VITE_API_BASE_URL}/uploads/${file.filename}`;
+      const pdfUrl = `${import.meta.env.VITE_API_BASE_URL}/uploads/${
+        file.filename
+      }`;
 
       const loadingTask = pdfjsLib.getDocument(pdfUrl);
       const pdf = await loadingTask.promise;
@@ -165,10 +162,8 @@ const PDFTaskUI: React.FC = () => {
       <Navbar />
 
       <div className="flex flex-col lg:flex-row flex-1 mt-12">
-
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           <div className="max-w-5xl mx-auto">
-          
             <button
               onClick={handleGoBack}
               className="mb-4 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
