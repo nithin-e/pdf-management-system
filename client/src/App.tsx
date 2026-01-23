@@ -7,8 +7,6 @@ import PDFTaskUI from './pages/TaskFileManager';
 function App() {
   return (
     <Router>
-    
-
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/afterUpload" element={<PDFTaskUI />} />
