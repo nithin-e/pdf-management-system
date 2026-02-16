@@ -25,15 +25,6 @@ app.use(
 );
 
 
-// app.use(
-//   cors({
-//     origin: [
-//       "https://pdf-management-system-cy9x.vercel.app",
-//       "https://pdf-management-system-uxrs-901elz6h-nithins-projects-bd599ad5.vercel.app"
-//     ],
-//     credentials: true,
-//   })
-// );
 
 
 app.use(express.json());
