@@ -15,25 +15,25 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const CORS_ORIGIN = process.env.CORS
 
-// app.use(
-//   cors({
-//     origin: CORS_ORIGIN,
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   })
-// );
-
-
 app.use(
   cors({
-    origin: [
-      "https://pdf-management-system-cy9x.vercel.app",
-      "https://pdf-management-system-uxrs-901elz6h-nithins-projects-bd599ad5.vercel.app"
-    ],
+    origin: CORS_ORIGIN,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+
+// app.use(
+//   cors({
+//     origin: [
+//       "https://pdf-management-system-cy9x.vercel.app",
+//       "https://pdf-management-system-uxrs-901elz6h-nithins-projects-bd599ad5.vercel.app"
+//     ],
+//     credentials: true,
+//   })
+// );
 
 
 app.use(express.json());
