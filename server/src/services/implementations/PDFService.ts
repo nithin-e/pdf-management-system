@@ -3,7 +3,6 @@ import { IPDFService } from "../interfaces/IPDFService.js";
 import { IFileService } from "../interfaces/IFileService.js";
 import { AppError } from "../../middleware/errorHandler.js";
 
-
 export class PDFService implements IPDFService {
   private fileService: IFileService;
 
@@ -27,14 +26,11 @@ export class PDFService implements IPDFService {
   }
 
   async extractPages(filename: string, pages: number[]): Promise<Buffer> {
-    // Validate pages first
     await this.validatePageNumbers(filename, pages);
 
-    // Read the original PDF
     const existingPdfBytes = this.fileService.readFile(filename);
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
-    // Create new PDF with selected pages
     const newPdfDoc = await PDFDocument.create();
 
     for (const pageNum of pages) {
@@ -42,7 +38,6 @@ export class PDFService implements IPDFService {
       newPdfDoc.addPage(copiedPage);
     }
 
-    // Save and return the new PDF
     const pdfBytes = await newPdfDoc.save();
     return Buffer.from(pdfBytes);
   }
