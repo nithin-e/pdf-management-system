@@ -15,14 +15,27 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const CORS_ORIGIN = process.env.CORS
 
-app.use(
-  cors({
-    origin: CORS_ORIGIN,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+
+
+const allowedOrigins = [
+  'https://pdf-management-system-seven.vercel.app',
+  'http://localhost:5173', 
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+  
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      return callback(new Error('CORS policy violation'), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 
 
